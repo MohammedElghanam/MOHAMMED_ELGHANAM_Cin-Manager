@@ -37,6 +37,8 @@ class UserController {
             const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
                 expiresIn: '1h',
             });
+
+            res.cookie('token', token, { httpOnly: true, maxAge: 3600000 });
             return res.json({ token });
 
         } catch (error) {
@@ -129,6 +131,15 @@ class UserController {
         } catch (err) {
             res.status(500).json({ error: 'An error occurred while resetting the password.' });
         }
+    }
+
+    static async logout(req, res) {
+
+        const clearing = res.clearCookie('token'); 
+        if (clearing) {            
+            res.redirect('/');
+        }
+        
     }
 
     static async getAllusers(req, res) {
