@@ -1,10 +1,15 @@
 const express = require('express');
 require('dotenv').config();
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
+
 const UserRoute = require('./routes/userRoutes');
 const movieRoutes = require('./routes/movieRoutes');
+const reservationRoutes = require('./routes/reservationRoutes');
+
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 
 
 
@@ -16,6 +21,7 @@ mongoose.connect("mongodb+srv://elghanammohammed20:mohammed20040303@cluster0.wqi
 
 app.use('/api/auth', UserRoute);
 app.use('/api/movies', movieRoutes);
+app.use('/api/reservations', reservationRoutes);
 
 app.get('/', (req, res) => {
     res.send('hello');

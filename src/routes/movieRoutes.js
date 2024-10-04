@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { addMovie, getMovies } = require('../controllers/movieController');
-const { verifyToken } = require('../middlewares/authMiddleware');
+const authRoleMiddleware = require('../middlewares/authRoleMiddleware');
 
-router.post('/addMovie', verifyToken); 
-router.get('/getMovies', getMovies);
+router.post('/addMovie', authRoleMiddleware(['admin']), addMovie); 
+router.get('/getMovies', authRoleMiddleware(['client']), getMovies);
 
 module.exports = router;
