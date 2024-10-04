@@ -1,7 +1,6 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const {PORT} = require('../config/jwt');
 
 
 class UserController {
@@ -26,6 +25,7 @@ class UserController {
         const { email, password } = req.body;
 
         try {
+
             const user = await User.findOne({ email });
 
             if (!user) return res.status(400).json({ message: 'User not found' });
@@ -37,6 +37,7 @@ class UserController {
                 expiresIn: '1h',
             });
             return res.json({ token });
+
         } catch (error) {
             return res.status(500).json({ message: error.message });
         }
