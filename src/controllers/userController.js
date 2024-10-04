@@ -133,13 +133,13 @@ class UserController {
         }
     }
 
-    static async logout(req, res) {
+    static logout(req, res) {
 
         const clearing = res.clearCookie('token'); 
         if (clearing) {            
-            res.redirect('/');
+            res.json({ message: 'Logout successful' });
         }
-        
+
     }
 
     static async getAllusers(req, res) {
